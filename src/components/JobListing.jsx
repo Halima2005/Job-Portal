@@ -54,7 +54,7 @@ const JobListing = () => {
           matchCategory(job) &&
           matchesLocation(job) &&
           matchesTitle(job) &&
-          matchesSearchLocation(jobs)
+          matchesSearchLocation(job)
       );
     setFilteredJobs(newFilteredJobs);
     setCurrentPage(1);
