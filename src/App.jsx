@@ -1,3 +1,4 @@
+import "quill/dist/quill.snow.css";
 import React, { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import RecruiterLogin from "./components/RecruiterLogin.jsx";
