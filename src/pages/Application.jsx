@@ -30,7 +30,7 @@ const Application = () => {
               </label>
               <button
                 onClick={(e) => setIsEdit(false)}
-                className="bg-green-100 border border-green-400 rounded-lg px-4 py-2"
+                className="bg-green-200 border border-green-400 rounded-lg px-4 py-2"
               >
                 Save
               </button>
