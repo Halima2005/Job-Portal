@@ -56,19 +56,19 @@ const Application = () => {
         <table className="min-w-full bg-white border border-gray-300 rounded-lg">
           <thead>
             <tr>
-              <th className="py-3 px-4 border border-gray-300 text-left">
+              <th className="py-3 px-4 border-b border-gray-300 text-left">
                 Company
               </th>
-              <th className="py-3 px-4 border border-gray-300 text-left">
+              <th className="py-3 px-4 border-b border-gray-300 text-left">
                 Job Title
               </th>
-              <th className="py-3 px-4 border border-gray-300 text-left max-sm:hidden">
+              <th className="py-3 px-4 border-b border-gray-300 text-left max-sm:hidden">
                 Location
               </th>
-              <th className="py-3 px-4 border border-gray-300 text-left">
+              <th className="py-3 px-4 border-b border-gray-300 text-left">
                 Date
               </th>
-              <th className="py-3 px-4 border border-gray-300 text-left">
+              <th className="py-3 px-4 border-b border-gray-300 text-left">
                 Status
               </th>
             </tr>
@@ -77,20 +77,20 @@ const Application = () => {
             {jobsApplied.map((job, index) =>
               true ? (
                 <tr key={index}>
-                  <td className="py-3 px-4 flex-items-center gap-2 border border-gray-200">
+                  <td className="py-3 px-4 flex-items-center gap-2 border-b border-gray-200 flex">
                     <img className="w-8 h-8" src={job.logo} alt="" />
                     {job.company}
                   </td>
-                  <td className="py-2 px-4 border border-gray-200">
+                  <td className="py-2 px-4 border-b border-gray-200 ">
                     {job.title}
                   </td>
-                  <td className="py-2 px-4 border border-gray-200 max:sm-hidden">
+                  <td className="py-2 px-4 border-b border-gray-200 max:sm-hidden">
                     {job.location}
                   </td>
-                  <td className="py-2 px-4 border border-gray-200 max:sm-hidden">
+                  <td className="py-2 px-4 border-b border-gray-200 max:sm-hidden">
                     {moment(job.date).format("ll")}
                   </td>
-                  <td className="py-2 px-4 border border-gray-200">
+                  <td className="py-2 px-4 border-b border-gray-200">
                     <span
                       className={`${
                         job.status === "Accepted"
