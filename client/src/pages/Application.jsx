@@ -68,7 +68,7 @@ const Application = () => {
               <th className="py-3 px-4 border-b border-gray-300 text-left">
                 Date
               </th>
-              <th className="py-3 px-4 border-b border-gray-300 text-left">
+              <th className="py-4 px-4 border-b border-gray-300 text-left">
                 Status
               </th>
             </tr>
