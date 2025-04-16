@@ -9,7 +9,16 @@ import { clerkWebhooks } from "./controllers/webhooks.js"
 const app = express()
 
 //Connect to database 
-await connectDB()
+const startServer = async () => {
+  await connectDB();
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+};
+
+startServer();
+
 
 
 //Middlewares
