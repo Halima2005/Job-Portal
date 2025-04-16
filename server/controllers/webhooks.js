@@ -6,55 +6,55 @@ import User from "../models/User.js";
 // API Controller Function to Manage Clerk User with database
 export const clerkWebhooks = async (req, res) => {
   try {
-    // Create a Svix webhook instance
-    const whook = new Svix.Webhook(process.env.CLERK_WEBHOOK_SECRET);
+    console.log("🔐 Received Clerk webhook");
+    console.log("Headers:", req.headers);
+    console.log("Body:", req.body);
 
-    // Verify Headers
+    const whook = new Svix.Webhook(process.env.CLERK_WEBHOOK_SECRET);
+    console.log("✅ Svix Webhook instance created");
+
     await whook.verify(JSON.stringify(req.body), {
       "svix-id": req.headers["svix-id"],
       "svix-timestamp": req.headers["svix-timestamp"],
       "svix-signature": req.headers["svix-signature"],
     });
+    console.log("✅ Webhook verified");
 
-    // Getting Data from request body
     const { data, type } = req.body;
+    console.log("📦 Webhook type:", type);
 
-    // Switch cases for different Events
     switch (type) {
-      case "user.created": {
-        const userData = {
+      case "user.created":
+        console.log("👤 Creating user");
+        await User.create({
           _id: data.id,
           email: data.email_address[0].email_address,
           name: data.first_name + " " + data.last_name,
           image: data.image_url,
           resume: "",
-        };
-
-        await User.create(userData);
-        res.json({});
+        });
         break;
-      }
-      case "user.updated": {
-        const userData = {
+      case "user.updated":
+        console.log("✏️ Updating user");
+        await User.findByIdAndUpdate(data.id, {
           email: data.email_address[0].email_address,
           name: data.first_name + " " + data.last_name,
           image: data.image_url,
-        };
-
-        await User.findByIdAndUpdate(data.id, userData);
-        res.json({});
+        });
         break;
-      }
-      case "user.deleted": {
+      case "user.deleted":
+        console.log("🗑 Deleting user");
         await User.findByIdAndDelete(data.id);
-        res.json({});
         break;
-      }
       default:
-        res.json({});
+        console.log("⚠️ Unknown event type");
     }
+
+    res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Webhook error:", error.message);
-    return res.status(500).json({ success: false, message: "Webhook processing failed" });
+    console.error("❌ Webhook error:", error.message);
+    res.status(500).json({ success: false, message: "Webhook error" });
   }
 };
+
+
