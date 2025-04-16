@@ -1,12 +1,14 @@
 import Svix from "svix"; // Default import for CommonJS module
 import User from "../models/User.js";
 
-// Create a Svix webhook instance
-const whook = new Svix.Webhook(process.env.CLERK_WEBHOOK_SECRET);
+
 
 // API Controller Function to Manage Clerk User with database
 export const clerkWebhooks = async (req, res) => {
   try {
+    // Create a Svix webhook instance
+    const whook = new Svix.Webhook(process.env.CLERK_WEBHOOK_SECRET);
+
     // Verify Headers
     await whook.verify(JSON.stringify(req.body), {
       "svix-id": req.headers["svix-id"],
