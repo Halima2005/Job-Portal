@@ -2,25 +2,21 @@ import Svix from "svix"; // Default import for CommonJS module
 import User from "../models/User.js";
 
 
-
-// API Controller Function to Manage Clerk User with database
 export const clerkWebhooks = async (req, res) => {
   try {
     console.log("🔐 Received Clerk webhook");
-    console.log("Headers:", req.headers);
-    console.log("Body:", req.body);
+
+    const payload = req.body; // raw Buffer
+    const bodyString = payload.toString("utf8");
 
     const whook = new Svix.Webhook(process.env.CLERK_WEBHOOK_SECRET);
-    console.log("✅ Svix Webhook instance created");
-
-    await whook.verify(JSON.stringify(req.body), {
+    await whook.verify(bodyString, {
       "svix-id": req.headers["svix-id"],
       "svix-timestamp": req.headers["svix-timestamp"],
       "svix-signature": req.headers["svix-signature"],
     });
-    console.log("✅ Webhook verified");
 
-    const { data, type } = req.body;
+    const { data, type } = JSON.parse(bodyString);
     console.log("📦 Webhook type:", type);
 
     switch (type) {
@@ -49,6 +45,7 @@ export const clerkWebhooks = async (req, res) => {
       default:
         console.log("⚠️ Unknown event type");
     }
+    
 
     res.status(200).json({ success: true });
   } catch (error) {
@@ -58,3 +55,14 @@ export const clerkWebhooks = async (req, res) => {
 };
 
 
+
+
+
+
+
+
+
+
+
+
+// API Controller Function to Manage Clerk User with database

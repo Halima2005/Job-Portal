@@ -5,13 +5,18 @@ import express from 'express';
 import connectDB from './config/db.js';
 import './config/instrument.js';
 import { clerkWebhooks } from "./controllers/webhooks.js";
-
+import bodyParser from "body-parser";
 // Initialize Express
 const app = express();
 
 // Middlewares
 app.use(cors());
+
+
+// Parse raw body ONLY for /webhooks
+app.use("/webhooks", bodyParser.raw({ type: "*/*" }));
 app.use(express.json());
+
 
 // Routes
 app.get('/', (req, res) => res.send("API Working ✅"));
