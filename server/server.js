@@ -25,15 +25,25 @@ Sentry.setupExpressErrorHandler(app);
 
 // Port
 const PORT = process.env.PORT || 5000;
-
-// Start Server (after routes and middlewares)
 const startServer = async () => {
-  await connectDB();
-
-  app.listen(PORT, () => {
-    console.log(`🚀 Server is running on port ${PORT}`);
-  });
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ MongoDB connection error:", error);
+  }
 };
+
+// // Start Server (after routes and middlewares)
+// const startServer = async () => {
+//   await connectDB();
+
+//   app.listen(PORT, () => {
+//     console.log(`🚀 Server is running on port ${PORT}`);
+//   });
+// };
 
 startServer();
 
