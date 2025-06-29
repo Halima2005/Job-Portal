@@ -5,6 +5,10 @@ import User from "../models/User.js";
 export const clerkWebhooks = async (req, res) => {
   try {
     console.log("🔐 Received Clerk webhook");
+    console.log("🟡 Webhook endpoint hit");
+    console.log("Headers:", req.headers);
+    console.log("Raw Body Buffer:", req.body);
+
 
     const payload = req.body; // raw Buffer
     const bodyString = payload.toString("utf8");
