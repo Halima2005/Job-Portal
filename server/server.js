@@ -12,6 +12,8 @@ const app = express();
 // CORS
 app.use(cors());
 
+
+
 // ✅ Webhook route - needs raw body parsing for Clerk
 app.post("/webhooks", bodyParser.raw({ type: "application/json" }), clerkWebhooks);
 
