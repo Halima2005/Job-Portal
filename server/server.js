@@ -7,7 +7,8 @@ import connectDB from "./config/db.js";
 import "./config/instrument.js";
 import { clerkWebhooks } from "./controllers/webhooks.js";
 import bodyParser from "body-parser";
-
+import companyRoutes from './routes/companyRoutes.js'
+import connectCloudinary from "./config/cloudinary.js";
 const app = express();
 
 // Setup middlewares
@@ -21,11 +22,11 @@ app.use(express.json());
 
 // Routes
 app.get("/", (req, res) => res.send("API Working ✅"));
-
+app.use('/api/company',companyRoutes)
 // Sentry error handling
 Sentry.setupExpressErrorHandler(app);
 
-// Start server
+// Start server PORT
 const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
@@ -38,7 +39,7 @@ const startServer = async () => {
     console.error("❌ Server failed to start:", error.message);
   }
 };
-
+await connectCloudinary();
 startServer();
 
 export default app;
