@@ -9,6 +9,10 @@ import { clerkWebhooks } from "./controllers/webhooks.js";
 import bodyParser from "body-parser";
 import companyRoutes from './routes/companyRoutes.js'
 import connectCloudinary from "./config/cloudinary.js";
+import jobRoutes from './routes/jobRoutes.js'
+
+
+
 const app = express();
 
 // Setup middlewares
@@ -23,6 +27,7 @@ app.use(express.json());
 // Routes
 app.get("/", (req, res) => res.send("API Working ✅"));
 app.use('/api/company',companyRoutes)
+app.use('/api/jobs',jobRoutes)
 // Sentry error handling
 Sentry.setupExpressErrorHandler(app);
 
