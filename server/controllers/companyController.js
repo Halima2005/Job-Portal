@@ -163,26 +163,58 @@ export const changeJobApplicationsStatus = async(req,res) => {
 }
 
 //Change Job visibility
-export const changeVisibility= async(req,res) => {
+// export const changeVisibility= async(req,res) => {
 
-    try{
+//     try{
 
-        const {id} = req.body
+//         const {id} = req.body
 
-        const companyId = req.company._id
+//         const companyId = req.company._id
 
-        const job = await Job.findById(id)
+//         const job = await Job.findById(id)
 
-        if(companyId.toString() === job.companyId.toString()) {
-            job.visible = !job.visible
-        }
+//         if(companyId.toString() === job.companyId.toString()) {
+//             job.visible =!job.visible
+//         }
 
-        await job.save()
+//         await job.save()
 
-        res.json({success:true,job})
+//         res.json({success:true,job})
 
-    }catch(error){
-                 res.json({success:false,message:error.message})
-        }
+//     }catch(error){
+//                  res.json({success:false,message:error.message})
+//         }
 
-}
+// }
+export const changeVisibility = async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    if (!req.company) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    const companyId = req.company._id;
+
+    const job = await Job.findById(id);
+
+    if (!job) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    if (!job.companyId) {
+      return res.status(400).json({ success: false, message: "Job is missing companyId" });
+    }
+
+    if (companyId.toString() === job.companyId.toString()) {
+      job.visible = !job.visible;
+      await job.save();
+      return res.json({ success: true, job });
+    } else {
+      return res.status(403).json({ success: false, message: "Not authorized to update this job" });
+    }
+
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
