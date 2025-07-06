@@ -9,7 +9,7 @@ const ManageJobs = () => {
     <div className="container p-4 max-w-5xl">
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 max-sm:text-sm">
-          <thread>
+          <thead>
             <tr>
               <th className="py-2 px-4 border-b border-gray-200 text-left max-sm:hidden">
                 #
@@ -54,7 +54,7 @@ const ManageJobs = () => {
                 </tr>
               ))}
             </tbody>
-          </thread>
+          </thead>
         </table>
       </div>
 
