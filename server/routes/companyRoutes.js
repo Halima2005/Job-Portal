@@ -2,7 +2,7 @@ import express from 'express'
 import { changeJobApplicationsStatus, changeVisibility, getCompanyData, getCompanyJobApplicants, getCompanyPostedJob, loginCompany, postJob, registerCompany } from '../controllers/companyController.js'
 import upload from '../config/multer.js'
 import { protectCompany } from '../middleware/authMiddleware.js'
-
+import { requireAuth } from '@clerk/express';
 const router = express.Router()
 
 //Register a company 
@@ -12,7 +12,7 @@ router.post('/register',upload.single('image'),registerCompany)
 router.post('/login',loginCompany)
 
 //Get Comapny Data
-router.get('/company',protectCompany,getCompanyData)
+router.get('/company',requireAuth(),protectCompany,getCompanyData)
 
 //Post a Job
 router.post('/post-job',protectCompany,postJob)

@@ -139,6 +139,16 @@ export const postJob= async(req,res) => {
 //Get Comapny Job Applications
 export const getCompanyJobApplicants = async(req,res) =>{
 
+  // try {
+
+  //   const companyId = req.company._id
+
+  //   //Find job Applications and populate related data
+  //   const applications = await 
+    
+  // } catch (error) {
+    
+  // }
 }
 
 //Get company Posted Jobs
