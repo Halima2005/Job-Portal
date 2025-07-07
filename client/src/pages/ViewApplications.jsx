@@ -38,23 +38,42 @@ const ViewApplications = () => {
 };
 
 //Function to Update Job Applications status
-const chnageJObApplicationStatus = async(id,status)=>{
-  const {data} = await axios.post(backendUrl + 'api/company/change-status',
-    {id,status},
-    {headers:{token:companyToken}}
-  )
-}
+// Function to update job application status
+const changeJobApplicationStatus = async (id, status) => {
+  try {
+    const { data } = await axios.post(
+      backendUrl + 'api/company/change-status',
+      { id, status },
+      { headers: { token: companyToken } }
+    );
+
+    if (data.success) {
+      toast.success(`Application ${status}`);
+      fetchCompanyJobApplications(); // Refresh updated data
+    } else {
+      toast.error(data.message);
+    }
+  } catch (error) {
+    toast.error(error.message);
+    console.error("❌ Error updating application status:", error);
+  }
+};
+
+
+
+
 
 useEffect(() => {
   if (companyToken) {
     fetchCompanyJobApplications();
+    
   }
 }, [companyToken]); // <-- add dependency
 
 return applicants === null ? (
   <Loading />
 ) : applicants.length === 0 ? (
-  <div>No applications found.</div>
+  <div className="flex items-center justify-center h-[70vh]"> <p className="text-xl sm:text-2xl">No Applications available</p></div>
 ) : (
   <div className="container mx-auto p-4">
     <div>
@@ -103,17 +122,22 @@ return applicants === null ? (
                   </a>
                 </td>
                 <td className="py-2 px-4 border-b border-gray-200 relative">
-                  <div className="relative inline-block text-left group">
+                  {applicant.status === "Pending"
+                  ?
+                   <div className="relative inline-block text-left group">
                     <button className="text-gray-500 action-button">...</button>
                     <div className="z-10 hidden absolute right-0 md:left-0 top-0 mt-2 w-32 bg-white border border-gray-200 rounded shadow group-hover:block">
-                      <button className="block w-full text-left px-4 py-2 text-blue-500 hover:bg-gray-100">
+                      <button onClick={()=> changeJobApplicationStatus(applicant._id,'Accepted')} className="block w-full text-left px-4 py-2 text-blue-500 hover:bg-gray-100">
                         Accept
                       </button>
-                      <button className="block w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100">
+                      <button  onClick={()=> changeJobApplicationStatus(applicant._id,'Rejected')} className="block w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100">
                         Reject
                       </button>
                     </div>
                   </div>
+                  : <div>{applicant.status}</div>
+                  }
+                  
                 </td>
               </tr>
             ))}

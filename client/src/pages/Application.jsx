@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { assets, jobsApplied } from "../assets/assets";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -14,9 +14,9 @@ const Application = () => {
    const { user} = useUser()
    const{getToken} = useAuth()
   const [isEdit, setIsEdit] = useState(false);
-  const [resume, setResume] = useState(null);
+  const [resume, setResume] = useState([]);
 
-  const { backendUrl, userData, userApplication,fetchUserData} = useContext(AppContext)
+  const { backendUrl, userData, userApplication,fetchUserData,fetchUserApplications} = useContext(AppContext)
 
  const updateResume = async () => {
   if (!resume) {
@@ -54,6 +54,13 @@ const Application = () => {
   setResume(null);
 };
 
+useEffect(()=>{
+
+  if(user){
+      fetchUserApplications()
+  }
+          
+},[user])
 
 
 
@@ -88,12 +95,16 @@ const Application = () => {
             </>
           ) : (
             <div className="flex gap-2">
-              <a
-                className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
-                href=""
-              >
-                Resume
-              </a>
+             {userData && userData.resume && (
+                  <a
+                    target="_blank"
+                    className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
+                    href={userData.resume}
+                    rel="noopener noreferrer"
+                  >
+                    Resume
+                  </a>
+                )}
               <button
                 onClick={() => setIsEdit(true)}
                 className=" bg-gray-100 text-gray-500 border border-gray-300 rounded-lg px-4 py-2"
