@@ -11,3 +11,4 @@ export default defineConfig({
     allowedHosts: ['.onrender.com'] // ✅ allow all Render subdomains
   }
 })
+1
