@@ -48,10 +48,10 @@ It provides a seamless and secure environment to post, apply, and manage job lis
 
 
 ### 👤 Job Seeker Dashboard
-![Jobseeker.jpeg](Job-Portal/assets/Jobseeker.jpeg)
+![Jobseeker.jpeg](assets/Jobseeker.jpeg)
 
 ### 🧑‍💼 Recruiter Dashboard
-![Recuriter.jpeg](Job-Portal/assets/Recuriter.jpeg)
+![Recuriter.jpeg](assets/Recuriter.jpeg)
 
 
 
